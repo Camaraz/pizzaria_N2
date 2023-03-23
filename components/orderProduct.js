@@ -1,12 +1,10 @@
 import { Text, View, TouchableOpacity } from 'react-native';
-import { Ionicons, Entypo } from '@expo/vector-icons';
 import styles from '../content/style';
 import orderStyles from '../content/order';
-import OrderProduct from '../components/orderProduct';
 
 export default function orderProduct({ product, addToCart, removeFromCart }) {
     return (
-        <View style={styles.container}>
+        <View style={orderStyles.listItem}>
 
             <Text>{product.description}</Text>
             <Text>R$ {product.unitValue}</Text>
