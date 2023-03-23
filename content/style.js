@@ -40,7 +40,36 @@ const styles = StyleSheet.create({
     logo:{
         margin: 10,
         resizeMode: 'contain'
-    }
+    },
+    inputText: {
+        borderColor: "#000",
+        backgroundColor: "#fff",
+        borderWidth: 2,
+        height: 50,
+        width: '70%',
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        marginBottom: 20,
+        fontSize: 20,
+        textAlign: 'center'
+    },
+    row: {
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    twoButtonRow:{
+        width: '40%',
+        height: 50,
+        borderRadius: 10,
+        justifyContent: 'center',
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        borderColor: "#000000",
+        borderWidth: 2,
+        margin: 10
+    },
+
 });
 
 export default styles;
