@@ -10,6 +10,7 @@ export default function product({ navigation }) {
     const [id, setId] = useState();
     const [code, setCode] = useState();
     const [description, setDescription] = useState();
+    const [unitValue, setUnitValue] = useState();
     const [category, setCategory] = useState();
 
     useEffect(
@@ -25,6 +26,7 @@ export default function product({ navigation }) {
             setId(props.id);
             setCode(props.code.toString());
             setDescription(props.description);
+            setUnitValue(props.unitValue.toString());
             setCategory(props.category);
         }
     };
@@ -35,6 +37,7 @@ export default function product({ navigation }) {
             id: id,
             code: code,
             description: description,
+            unitValue: unitValue.replace(',', '.'),
             category: category
         };
 
@@ -60,6 +63,9 @@ export default function product({ navigation }) {
 
             <Text style={styles.textoBotaoMenu}>Descrição</Text>
             <TextInput onChangeText={(text) => setDescription(text)} value={description} style={styles.inputText}></TextInput>
+
+            <Text style={styles.textoBotaoMenu}>Preço Unitário</Text>
+            <TextInput onChangeText={(text) => setUnitValue(text)} value={unitValue} style={styles.inputText}></TextInput>
 
             <Text style={styles.textoBotaoMenu}>Categoria</Text>
             <TextInput onChangeText={(text) => setCategory(text)} value={category} style={styles.inputText}></TextInput>

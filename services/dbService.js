@@ -32,6 +32,24 @@ export async function createTableProduct() {
     });
 };
 
+export async function deleteTableProduct() {
+    return new Promise((resolve, reject) => {
+        const query = `DROP TABLE IF EXISTS tbProduct`;
+
+        let dbCx = getDbConnection();        
+        
+        dbCx.transaction(tx => {
+            tx.executeSql(query);
+            resolve(true); 
+        },
+            error => {
+                console.log(error);
+                resolve(false);
+            }
+        );
+    });
+};
+
 export function getAllProducts() {
 
     return new Promise((resolve, reject) => {
@@ -49,8 +67,8 @@ export function getAllProducts() {
                             id: registros.rows.item(n).id,
                             code: registros.rows.item(n).code,
                             description: registros.rows.item(n).description,
-                            unitValue: registros.rows.item(n).unitValue,
-                            category: registros.rows.item(n).category
+                            category: registros.rows.item(n).category,
+                            unitValue: registros.rows.item(n).unitValue
                         }
                         retorno.push(obj);
                     }
@@ -89,11 +107,11 @@ export function newProduct(product) {
 
 export function editProduct(product) {
     return new Promise((resolve, reject) => {
-        let query = 'update tbProduct set code=?, description=?, unitValue=? category=? where id=?';
+        let query = 'update tbProduct set code=?, description=?, unitValue=?, category=? where id=?';
         let dbCx = getDbConnection();
 
         dbCx.transaction(tx => {
-            tx.executeSql(query, [product.code, product.description, product.unitValue, product.category],
+            tx.executeSql(query, [product.code, product.description, product.unitValue, product.category, product.id],
                 (tx, resultado) => {
                     resolve(resultado.rowsAffected > 0);
                 })

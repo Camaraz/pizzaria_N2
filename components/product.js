@@ -1,26 +1,26 @@
 import {Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons, Entypo } from '@expo/vector-icons';
 import styles from '../content/style';
+import productStyles from '../content/product';
 
 // Passou a entidade e dois metodos
 export default function product({product, exclude, edit}) {
     return (
-        <View style={styles.contato} >
+        <View style={productStyles.listItem} >
 
-            <Text>Código: {product.code}</Text>
-            <Text>Descrição: {product.description}</Text>
-            <Text>Preço: {product.unitValue}</Text>
-            <Text>Categoria: {product.category}</Text>
+            <Text style={productStyles.listItemText}>Código: {product.code}</Text>
+            <Text style={productStyles.listItemText}>Descrição: {product.description}</Text>
+            <Text style={productStyles.listItemText}>Preço: {product.unitValue}</Text>
+            <Text style={productStyles.listItemText}>Categoria: {product.category}</Text>
 
-            <View style={styles.dadosBotoesAcao}>
-                <TouchableOpacity onPress={() => exclude(product.id)}>
-                    <Ionicons name="md-remove-circle" size={32} color="red" />
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => edit(product)}>
+            <View style={[styles.row, productStyles.listItemRow]}>
+                <TouchableOpacity onPress={() => edit(product)} style={productStyles.listItemIcon}>
                     <Entypo name="edit" size={32} color="black" />
                 </TouchableOpacity>
 
+                <TouchableOpacity onPress={() => exclude(product.id)} style={productStyles.listItemIcon}>
+                    <Ionicons name="md-remove-circle" size={32} color="red" />
+                </TouchableOpacity>
             </View>
         </View>
     );

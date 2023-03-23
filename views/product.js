@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import styles from '../content/style';
 import Product from '../components/product';
 
-import { createTableProduct, deleteProduct, editProduct, getAllProducts, newProduct } from '../services/dbService';
+import { createTableProduct, deleteProduct, getAllProducts } from '../services/dbService';
 
 export default function product({ navigation }) {
 
@@ -65,10 +65,11 @@ export default function product({ navigation }) {
         } catch (e) {
             Alert.alert(e);
         }
-    }
+    };
 
     return (
         <View style={styles.container}>
+            <Text></Text>
 
             <View style={styles.row}>
 
