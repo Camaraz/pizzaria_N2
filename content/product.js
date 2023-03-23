@@ -3,10 +3,10 @@ import { StyleSheet } from "react-native";
 const productStyles = StyleSheet.create({
     listItem: {
         backgroundColor: '#fff',
-        //width: '150%',
         height: 'auto',
         alignItems: 'flex-start',
         margin: 10,
+        padding: 5,
         borderRadius: 5,
         shadowColor: "#000",
         shadowOffset: {

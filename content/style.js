@@ -70,7 +70,10 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         margin: 10
     },
-
+    rowButtonBottom: {
+        position: 'absolute',
+        bottom: 0
+    }
 });
 
 export default styles;
