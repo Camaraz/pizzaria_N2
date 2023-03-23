@@ -8,3 +8,10 @@ npm install react-native-gesture-handler react-native-reanimated react-native-sc
 
 # Rodar projeto
 npx expo start
+
+# Comandos Git
+git pull (baixar informações) <br/>
+git status (verificar o que foi alterado) <br/>
+git add . (adiciona em um commit) <br/>
+git commit -m "(mensagem)" (faz o commit) <br/>
+git push (envia para o git as alterações) <br/>
