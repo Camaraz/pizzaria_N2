@@ -12,7 +12,6 @@ export default function product({ navigation }) {
 
     useEffect(
         () => {
-            console.log('Inicializando a tela');
             processUseEffect();
         }, []
     );
@@ -57,11 +56,11 @@ export default function product({ navigation }) {
     async function confirmDelete(id) {
         try {
             await deleteProduct(id);
-            
+
             Alert.alert('Produto apagado com sucesso!');
-            
+
             await loadProducts();
-            
+
         } catch (e) {
             Alert.alert(e);
         }
@@ -70,6 +69,15 @@ export default function product({ navigation }) {
     return (
         <View style={styles.container}>
             <Text></Text>
+
+            <ScrollView>
+                {
+                    productList.map((prod, index) => (
+                        <Product product={prod} key={index.toString()}
+                            exclude={exclude} edit={edit} />
+                    ))
+                }
+            </ScrollView>
 
             <View style={styles.row}>
 
@@ -82,16 +90,6 @@ export default function product({ navigation }) {
                 </TouchableOpacity>
 
             </View>
-
-            <ScrollView>
-                {
-                    productList.map((prod, index) => (
-                        <Product product={prod} key={index.toString()}
-                            exclude={exclude} edit={edit} />
-                    ))
-                }
-            </ScrollView>
-
         </View>
     );
 }

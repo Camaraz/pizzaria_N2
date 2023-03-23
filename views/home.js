@@ -17,6 +17,10 @@ export default function home({ navigation }) {
             <Text style={styles.textoBotaoMenu}>Produtos</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity style={styles.botaoMenu} onPress={() => navigation.navigate('sale')}> 
+            <Text style={styles.textoBotaoMenu}>Vendas</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.botaoMenu} onPress={() => navigation.navigate('about')}> 
             <Text style={styles.textoBotaoMenu}>Informações</Text>
         </TouchableOpacity>

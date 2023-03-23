@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FF6666',
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 30,
     },
     titulo: {
         fontSize: 30,
