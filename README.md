@@ -6,7 +6,8 @@ npm install -d <br/>
 npm install react-navigation <br/>
 npm install react-native-gesture-handler react-native-reanimated@~2.14.4 react-native-screens react-native-safe-area-context @react-native-community/masked-view <br/>
 npm install @expo/vector-icons <br/>
-npm instal expo-sqlite <br/>
+npm install expo-sqlite <br/>
+npm install react-native-dropdown-picker
 <!-- último comando é para corrigir a versão-->
 <!--npx expo install react-native-reanimated@~2.14.4--> 
 
