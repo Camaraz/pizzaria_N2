@@ -6,6 +6,7 @@ import about from './views/about';
 import product from './views/product';
 import productEdit from './views/productEdit';
 import sale from './views/sale';
+import cart from './views/cart';
 
 export default function App() {
   return ( 
@@ -20,6 +21,7 @@ const Routes = createAppContainer(
     order,
     product,
     productEdit,
-    sale
+    sale,
+    cart
   })
 );

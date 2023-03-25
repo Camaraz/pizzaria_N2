@@ -12,11 +12,11 @@ export default function orderProduct({ product, addToCart, removeFromCart }) {
 
 
             <View style={[styles.componentRow]}>
-                <TouchableOpacity onPress={() => removeFromCart(product.id)} style={orderStyles.listIcon} >
+                <TouchableOpacity onPress={() => removeFromCart(product)} style={orderStyles.listIcon} >
                     <Feather name="minus-circle" size={32} color="black" />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => addToCart(product.id)} >
+                <TouchableOpacity onPress={() => addToCart(product)} >
                     <Feather name="plus-circle" size={32} color="black" />
                 </TouchableOpacity>
             </View>

@@ -27,7 +27,6 @@ export default function product({ navigation }) {
 
     useEffect(
         () => {
-            console.log('Inicializando a tela');
             loadProduct();
         }, []
     );

@@ -4,15 +4,36 @@ import styles from '../content/style';
 import OrderProduct from '../components/orderProduct';
 import { useState, useEffect } from 'react';
 import { getAllProducts } from '../services/dbService';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function product({ navigation }) {
 
+    let props = navigation.state.params;
+
     const [productList, setProducts] = useState([]);
+    const [cartQuantity, setCartQuantity] = useState(0);
+    const [productsOnCart, setProductsOnCart] = useState([]);
 
     useEffect(
         () => {
             processUseEffect();
         }, []
+    );
+
+    useEffect(
+        () => {
+            // receive an array when coming back from cart
+            if (props) {
+                console.log('retornou a tela de pedido');
+                setProductsOnCart(props);
+                console.log(productsOnCart);
+                setCartQuantity(productsOnCart.length);
+                console.log(productsOnCart.length);
+            } else {
+                setCartQuantity(productsOnCart.length);
+                console.log(productsOnCart.length);
+            }
+        }, [productsOnCart]
     );
 
     async function processUseEffect() {
@@ -28,12 +49,16 @@ export default function product({ navigation }) {
         }
     };
 
-    function addItemToCart(id){
-        console.log('adding to cart');
+    function addItemToCart(item) {
+        setProductsOnCart(oldList => [...oldList, item]);
     };
 
-    function removeItemFromCart(id){
-        console.log('removing from cart');
+    function removeItemFromCart(item) {
+        let index = productsOnCart.indexOf(item);
+
+        if (index > -1) {
+            setProductsOnCart([...productsOnCart.slice(0, index), ...productsOnCart.slice(index + 1)]);
+        }
     }
 
     return (
@@ -48,17 +73,15 @@ export default function product({ navigation }) {
                 }
             </ScrollView>
 
-            <View style={[styles.row, styles.rowButtonBottom]}>
-
-                <TouchableOpacity style={styles.twoButtonRow} onPress={() => navigation.navigate('home')}>
-                    <Text style={styles.textoBotaoMenu}>Voltar</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.twoButtonRow} >
-                    <Text style={styles.textoBotaoMenu}>Carrinho</Text>
-                </TouchableOpacity>
-
-            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('home')} style={styles.bottomButtonLeft} >
+                <Ionicons name="chevron-back-circle" size={50} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('cart', productsOnCart)} style={styles.bottomButtonRight} >
+                <View style={styles.row}>
+                    <Ionicons name="cart" size={50} />
+                    <Text style={{ fontSize: 20, marginRight: 5 }}>{cartQuantity ? cartQuantity : 0}</Text>
+                </View>
+            </TouchableOpacity>
 
         </View>
     );
