@@ -68,7 +68,7 @@ export function getAllProducts() {
                             code: registros.rows.item(n).code,
                             description: registros.rows.item(n).description,
                             category: registros.rows.item(n).category,
-                            unitValue: registros.rows.item(n).unitValue
+                            unitValue: registros.rows.item(n).unitValue.toFixed(2)
                         }
                         retorno.push(obj);
                     }

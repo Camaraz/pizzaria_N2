@@ -19,7 +19,6 @@ const productStyles = StyleSheet.create({
     },
     listItemText: {
         fontSize: 18,
-        //paddingRight: 10,
         color: 'black'
     },
     listItemRow: {

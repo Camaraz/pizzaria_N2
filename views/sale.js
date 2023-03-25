@@ -1,6 +1,7 @@
 import { Alert, Text, View, TouchableOpacity, FlatList } from 'react-native';
 import styles from '../content/style';
 import saleStyles from '../content/sale';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function sale({ navigation }) {
 
@@ -10,6 +11,11 @@ export default function sale({ navigation }) {
 
             <Text>Produtos Vendidos</Text>
 
+
+            <TouchableOpacity onPress={() => navigation.navigate('home')} style={styles.bottomButtonLeft} >
+                <Ionicons name="chevron-back-circle" size={50} />
+            </TouchableOpacity>
+            
             <View style={styles.row}>
                 <TouchableOpacity style={styles.twoButtonRow} onPress={() => navigation.navigate('home')}>
                     <Text style={styles.textoBotaoMenu}>Voltar</Text>

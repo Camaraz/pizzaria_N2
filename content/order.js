@@ -17,11 +17,27 @@ const orderStyles = StyleSheet.create({
         shadowRadius: 2.22,
         elevation: 3,
     },
+    listItemText: {
+        fontSize: 18,
+        color: 'black'
+    },
     roundButton: {
         width: 30,
         height: 30,
-        borderRadius: 15
-    }
+        borderRadius: 15,
+        backgroundColor: "lightgrey",
+        alignItems: 'center'
+    },
+    listIcon:{
+        alignContent: 'center',
+        textAlign: 'center',
+        alignItems: 'center'
+    },
+    listItemRow: {
+        alignContent: 'center',
+        textAlign: 'center',
+        alignItems: 'center'
+    },
 });
 
 export default orderStyles;

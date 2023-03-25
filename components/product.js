@@ -1,5 +1,5 @@
 import { Text, View, TouchableOpacity } from 'react-native';
-import { Ionicons, Entypo } from '@expo/vector-icons';
+import { Ionicons, Entypo, Feather } from '@expo/vector-icons';
 import styles from '../content/style';
 import productStyles from '../content/product';
 
@@ -13,7 +13,7 @@ export default function product({ product, exclude, edit }) {
             </Text>
 
             <Text style={productStyles.listItemText}>
-                <Text style={{ fontWeight: "bold" }}>Descrição:</Text>
+                <Text style={{ fontWeight: "bold" }}>Descrição: </Text>
                 {product.description}
             </Text>
 
@@ -30,11 +30,11 @@ export default function product({ product, exclude, edit }) {
 
             <View style={[styles.row, productStyles.listItemRow]}>
                 <TouchableOpacity onPress={() => edit(product)} style={productStyles.listItemIcon}>
-                    <Entypo name="edit" size={32} color="black" />
+                    <Feather name="edit-2" size={32} color="black" />
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => exclude(product.id)} style={productStyles.listItemIcon}>
-                    <Ionicons name="md-remove-circle" size={32} color="red" />
+                    <Feather name="trash-2" size={32} color="black" />
                 </TouchableOpacity>
             </View>
         </View>

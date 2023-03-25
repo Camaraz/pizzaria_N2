@@ -9,6 +9,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 30,
     },
+    containerWithButton:{
+        flex: 0.8,
+        backgroundColor: '#FF6666',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 30,
+    },
+    containerSV: {
+        width: '90%'
+    },
     titulo: {
         fontSize: 30,
         marginBottom: 50,
@@ -54,10 +64,43 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center'
     },
+    inputText2: {
+        borderColor: "#000",
+        backgroundColor: "#fff",
+        borderWidth: 2,
+        height: 50,
+        width: '100%',
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        marginBottom: 20,
+        fontSize: 20,
+        textAlign: 'center'
+    },
+    labelInput:{
+        fontSize: 30,
+        textAlign: 'center'
+    },
     row: {
         flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'space-between'
+    },
+    componentRow: {
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    bottomButtonLeft:{
+        alignSelf: 'flex-start',
+        position: 'absolute',
+        bottom: 20,
+        marginLeft: 10
+    },
+    bottomButtonRight:{
+        alignSelf: 'flex-end',
+        position: 'absolute',
+        bottom: 20,
+        marginRight: 10
     },
     twoButtonRow:{
         width: '40%',
@@ -72,7 +115,16 @@ const styles = StyleSheet.create({
     },
     rowButtonBottom: {
         position: 'absolute',
-        bottom: 0
+        bottom: 0,
+        backgroundColor: '#867E7E',
+        width: '100%'
+    },
+    dropDown: {
+        width: '100%',
+        height: 50,
+        fontSize: 30,
+        textAlign: 'center',
+        borderWidth: 2,
     }
 });
 

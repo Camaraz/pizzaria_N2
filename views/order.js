@@ -39,7 +39,7 @@ export default function product({ navigation }) {
     return (
         <View style={styles.container}>
 
-            <ScrollView>
+            <ScrollView style={styles.containerSV}>
                 {
                     productList.map((prod, index) => (
                         <OrderProduct product={prod} key={index.toString()}

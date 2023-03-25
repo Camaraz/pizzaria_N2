@@ -2,7 +2,7 @@ import { Text, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useState, useEffect } from 'react';
 import styles from '../content/style';
 import Product from '../components/product';
-
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { createTableProduct, deleteProduct, getAllProducts } from '../services/dbService';
 
 export default function product({ navigation }) {
@@ -78,18 +78,13 @@ export default function product({ navigation }) {
                     ))
                 }
             </ScrollView>
+            
+            <TouchableOpacity onPress={() => navigation.navigate('home')} style={styles.bottomButtonLeft} >
+                <Ionicons name="chevron-back-circle" size={50} />
+            </TouchableOpacity><TouchableOpacity onPress={() => navigation.navigate('productEdit', null)} style={styles.bottomButtonRight} >
+                <Ionicons name="add-circle" size={50} />
+            </TouchableOpacity>
 
-            <View style={styles.row}>
-
-                <TouchableOpacity style={styles.twoButtonRow} onPress={() => navigation.navigate('home')}>
-                    <Text style={styles.textoBotaoMenu}>Voltar</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.twoButtonRow} onPress={() => navigation.navigate('productEdit', null)}>
-                    <Text style={styles.textoBotaoMenu}>Novo</Text>
-                </TouchableOpacity>
-
-            </View>
         </View>
     );
 }
