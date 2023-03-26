@@ -2,7 +2,7 @@ import { Text, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useState, useEffect } from 'react';
 import styles from '../content/style';
 import Product from '../components/product';
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { createTableProduct, deleteProduct, getAllProducts } from '../services/dbService';
 
 export default function product({ navigation }) {
@@ -39,7 +39,6 @@ export default function product({ navigation }) {
     };
 
     function exclude(id) {
-        console.log(id);
         Alert.alert('Atenção', 'Deseja excluir este produto?',
             [
                 {
@@ -68,9 +67,14 @@ export default function product({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text></Text>
 
-            <ScrollView>
+            <View style={[styles.addMarginTop, styles.addMarginBottom, styles.containerSV, {alignItems: 'center'}]}>
+                <TouchableOpacity style={styles.botaoMenu} onPress={() => navigation.navigate('category')}>
+                    <Text style={styles.textoBotaoMenu}>Categorias</Text>
+                </TouchableOpacity>
+            </View>
+
+            <ScrollView style={styles.containerSV}>
                 {
                     productList.map((prod, index) => (
                         <Product product={prod} key={index.toString()}
@@ -78,7 +82,7 @@ export default function product({ navigation }) {
                     ))
                 }
             </ScrollView>
-            
+
             <TouchableOpacity onPress={() => navigation.navigate('home')} style={styles.bottomButtonLeft} >
                 <Ionicons name="chevron-back-circle" size={50} />
             </TouchableOpacity><TouchableOpacity onPress={() => navigation.navigate('productEdit', null)} style={styles.bottomButtonRight} >

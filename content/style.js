@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FF6666',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 30,
+        //marginTop: 50,
     },
     containerWithButton:{
         flex: 0.8,
@@ -20,8 +20,9 @@ const styles = StyleSheet.create({
         width: '90%'
     },
     titulo: {
-        fontSize: 30,
-        marginBottom: 50,
+        fontSize: 40,
+        marginTop: 20,
+        marginBottom: 20
     },
     botaoTela1: {
         width: '50%',
@@ -125,6 +126,19 @@ const styles = StyleSheet.create({
         fontSize: 30,
         textAlign: 'center',
         borderWidth: 2,
+    },
+    dropDownRow: {
+        width: '60%',
+        height: 50,
+        fontSize: 30,
+        textAlign: 'center',
+        borderWidth: 2,
+    },
+    addMarginTop:{
+        marginTop: 20
+    },
+    addMarginBottom: {
+        marginBottom: 10
     }
 });
 

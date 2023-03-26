@@ -7,6 +7,8 @@ import product from './views/product';
 import productEdit from './views/productEdit';
 import sale from './views/sale';
 import cart from './views/cart';
+import category from './views/category';
+import categoryEdit from './views/categoryEdit';
 
 export default function App() {
   return ( 
@@ -22,6 +24,8 @@ const Routes = createAppContainer(
     product,
     productEdit,
     sale,
-    cart
+    cart,
+    category,
+    categoryEdit
   })
 );

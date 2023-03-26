@@ -27,9 +27,7 @@ const productStyles = StyleSheet.create({
         alignItems: 'center'
     },
     listItemIcon:{
-        width: '40%',
-        alignContent: 'center',
-        textAlign: 'center',
+        width: '20%',
         alignItems: 'center'
     }
 });

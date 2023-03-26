@@ -25,6 +25,8 @@ export default function home({ navigation }) {
             <Text style={styles.textoBotaoMenu}>Informações</Text>
         </TouchableOpacity>
 
+        <StatusBar style='dark'></StatusBar>
+
     </View>
   );
 }

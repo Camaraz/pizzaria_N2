@@ -1,5 +1,5 @@
 import { Text, View, TouchableOpacity } from 'react-native';
-import { Ionicons, Entypo, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import styles from '../content/style';
 import productStyles from '../content/product';
 
@@ -28,7 +28,7 @@ export default function product({ product, exclude, edit }) {
                 {product.category}
             </Text>
 
-            <View style={[styles.row, productStyles.listItemRow]}>
+            <View style={[styles.row, {alignSelf: 'flex-end'}]}>
                 <TouchableOpacity onPress={() => edit(product)} style={productStyles.listItemIcon}>
                     <Feather name="edit-2" size={32} color="black" />
                 </TouchableOpacity>

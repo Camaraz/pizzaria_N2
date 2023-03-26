@@ -1,8 +1,7 @@
-import { Text, View, TouchableOpacity, TextInput, ScrollView, Keyboard } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Keyboard, Alert } from 'react-native';
 import styles from '../content/style';
 import { useState, useEffect } from 'react';
-import { editProduct, newProduct } from '../services/dbService';
-import { Alert } from 'react-native';
+import { editProduct, getAllCategoryForDropDown, newProduct } from '../services/dbService';
 import { Ionicons } from '@expo/vector-icons';
 import DropDownPicker from "react-native-dropdown-picker";
 
@@ -18,15 +17,11 @@ export default function product({ navigation }) {
     // Fields to Drop Down
     const [categoryOpen, setCategoryOpen] = useState(false);
     const [category, setCategory] = useState();
-    const [categoryList, setCategoryList] = useState([
-        { label: 'PIZZA SALGADA', value: 'PIZZA SALGADA' },
-        { label: 'PIZZA DOCE', value: 'PIZZA DOCE' },
-        { label: 'BEBIDA', value: 'BEBIDA' },
-        { label: 'OUTROS', value: 'OUTROS' }
-    ]);
+    const [categoryList, setCategoryList] = useState([]);
 
     useEffect(
         () => {
+            loadCategories();
             loadProduct();
         }, []
     );
@@ -37,12 +32,20 @@ export default function product({ navigation }) {
             setCode(props.code.toString());
             setDescription(props.description);
             setUnitValue(props.unitValue.toString());
-            setCategory(props.category);
+            setCategory(props.categoryId);
         }
     };
 
-    function save() {
+    async function loadCategories() {
+        try {
+            let list = await getAllCategoryForDropDown();
+            setCategoryList(list);
+        } catch (e) {
 
+        }
+    }
+
+    function save() {
         if (!validateProduct()) {
             return;
         } else {
@@ -54,16 +57,18 @@ export default function product({ navigation }) {
                 category: category
             };
 
+            let result = false;
             if (product.id) {
-                console.log('editando');
-                let result = editProduct(product);
-                console.log(result);
+                result = editProduct(product);
             } else {
-                let result = newProduct(product);
-                console.log(result);
+                result = newProduct(product);
             }
 
-            navigation.navigate('product');
+            if (result){
+                navigation.navigate('product');
+            } else {
+                Alert.alert('Não foi possível salvar esse produto.');
+            }
         }
     };
 
@@ -92,7 +97,7 @@ export default function product({ navigation }) {
         return true;
     };
 
-    function closeKeyBoard(){
+    function closeKeyBoard() {
         Keyboard.dismiss();
     };
 
@@ -101,34 +106,31 @@ export default function product({ navigation }) {
 
             <View style={styles.containerSV}>
 
-            <Text style={styles.labelInput}>Código</Text>
-            <TextInput onChangeText={(text) => setCode(text)} value={code} style={styles.inputText2}></TextInput>
+                <Text style={styles.labelInput}>Código</Text>
+                <TextInput onChangeText={(text) => setCode(text)} value={code} style={styles.inputText2}></TextInput>
 
-            <Text style={styles.labelInput}>Descrição</Text>
-            <TextInput onChangeText={(text) => setDescription(text)} value={description} style={styles.inputText2}></TextInput>
+                <Text style={styles.labelInput}>Descrição</Text>
+                <TextInput onChangeText={(text) => setDescription(text)} value={description} style={styles.inputText2}></TextInput>
 
-            <Text style={styles.labelInput}>Preço Unitário</Text>
-            <TextInput onChangeText={(text) => setUnitValue(text)} value={unitValue} style={styles.inputText2}></TextInput>
+                <Text style={styles.labelInput}>Preço Unitário</Text>
+                <TextInput onChangeText={(text) => setUnitValue(text)} value={unitValue} style={styles.inputText2}></TextInput>
 
-            <Text style={styles.labelInput}>Categoria</Text>
+                <Text style={styles.labelInput}>Categoria</Text>
 
-            <DropDownPicker
-                style={[styles.dropDown]}
-                open={categoryOpen}
-                value={category}
-                items={categoryList}
-                setOpen={setCategoryOpen}
-                setItems={setCategoryList}
-                setValue={setCategory}
-                placeholder='Selecione'
-                onOpen={closeKeyBoard}
-                onChangeValue={item => console.log(item)}
-            />
+                <DropDownPicker
+                    style={[styles.dropDown, styles.addMarginBottom]}
+                    open={categoryOpen}
+                    value={category}
+                    items={categoryList}
+                    setOpen={setCategoryOpen}
+                    setItems={setCategoryList}
+                    setValue={setCategory}
+                    placeholder='Selecione'
+                    onOpen={closeKeyBoard}
+                    textStyle={{fontSize:20, textAlign: 'center'}}
+                />
 
-            
             </View>
-
-            <Text></Text>
 
             <TouchableOpacity onPress={() => save()} style={styles.botaoMenu} >
                 <Text style={styles.labelBotao}>Salvar</Text>

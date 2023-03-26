@@ -1,10 +1,11 @@
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Alert } from 'react-native';
 import { ScrollView } from 'react-navigation';
 import styles from '../content/style';
 import OrderProduct from '../components/orderProduct';
 import { useState, useEffect } from 'react';
-import { getAllProducts } from '../services/dbService';
+import { getAllProducts, getFilteredProducts, getAllCategoryForDropDown } from '../services/dbService';
 import { Ionicons } from '@expo/vector-icons';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function product({ navigation }) {
 
@@ -14,55 +15,114 @@ export default function product({ navigation }) {
     const [cartQuantity, setCartQuantity] = useState(0);
     const [productsOnCart, setProductsOnCart] = useState([]);
 
+    // Fields to Drop Down
+    const [categoryOpen, setCategoryOpen] = useState(false);
+    const [category, setCategory] = useState();
+    const [categoryList, setCategoryList] = useState([]);
+
     useEffect(
         () => {
             processUseEffect();
+
+            if (props) {
+
+                for (i in props) {
+                    let product = {
+                        id: props[i].id,
+                        code: props[i].code,
+                        description: props[i].description,
+                        unitValue: props[i].unitValue,
+                        category: props[i].category,
+                        categoryId: props[i].categoryId,
+                    };
+
+                    setProductsOnCart(oldList => [...oldList, product]);
+                }
+            }
         }, []
     );
 
     useEffect(
         () => {
-            // receive an array when coming back from cart
-            if (props) {
-                console.log('retornou a tela de pedido');
-                setProductsOnCart(props);
-                console.log(productsOnCart);
-                setCartQuantity(productsOnCart.length);
-                console.log(productsOnCart.length);
-            } else {
-                setCartQuantity(productsOnCart.length);
-                console.log(productsOnCart.length);
-            }
+            setCartQuantity(productsOnCart.length);
         }, [productsOnCart]
     );
 
     async function processUseEffect() {
-        await loadProducts();
+        await loadProducts(null);
+        await loadCategories();
     };
 
-    async function loadProducts() {
+    async function loadProducts(choosedFilter) {
         try {
-            let list = await getAllProducts()
-            setProducts(list);
+            if (choosedFilter){
+                let list = await getFilteredProducts(choosedFilter);
+                setProducts(list);
+            } else {
+                let list = await getAllProducts();
+                setProducts(list);
+            }
         } catch (e) {
             Alert.alert(e.toString());
         }
     };
+
+    async function loadCategories() {
+        try {
+            let list = await getAllCategoryForDropDown();
+            setCategoryList(list);
+
+            let defaultValueDdp = {
+                label: 'TODOS',
+                value: 'TODOS'
+            };
+
+            setCategoryList(oldList => [...oldList, defaultValueDdp]);
+        } catch (e) {
+            Alert.alert('Não foi possível carregar as categorias. Erro: ' + e.toString());
+        }
+    }
 
     function addItemToCart(item) {
         setProductsOnCart(oldList => [...oldList, item]);
     };
 
     function removeItemFromCart(item) {
-        let index = productsOnCart.indexOf(item);
+
+        let index = productsOnCart.map(function (x) {
+            return x.id;
+        }).indexOf(item.id);
 
         if (index > -1) {
             setProductsOnCart([...productsOnCart.slice(0, index), ...productsOnCart.slice(index + 1)]);
         }
     }
 
+    function filterProducts (choosedFilter) {
+        choosedFilter = choosedFilter == 'TODOS' ? null : choosedFilter;
+        loadProducts(choosedFilter);
+    };
+
     return (
         <View style={styles.container}>
+
+            <View style={{zIndex: 99}}>
+                <Text style={[styles.labelInput, styles.addMarginTop]}>Filtrar por:</Text>
+                <DropDownPicker
+                    style={[styles.dropDownRow, styles.addMarginBottom]}
+                    open={categoryOpen}
+                    value={category}
+                    items={categoryList}
+                    setOpen={setCategoryOpen}
+                    setItems={setCategoryList}
+                    setValue={setCategory}
+                    onChangeValue={item => filterProducts(item)}
+                    zIndex={10}
+                    textStyle={{fontSize:20, textAlign: 'center'}}
+                    dropDownContainerStyle={{width: '60%'}}
+                    placeholder='TODOS'
+                />
+            </View>
 
             <ScrollView style={styles.containerSV}>
                 {
@@ -79,7 +139,7 @@ export default function product({ navigation }) {
             <TouchableOpacity onPress={() => navigation.navigate('cart', productsOnCart)} style={styles.bottomButtonRight} >
                 <View style={styles.row}>
                     <Ionicons name="cart" size={50} />
-                    <Text style={{ fontSize: 20, marginRight: 5 }}>{cartQuantity ? cartQuantity : 0}</Text>
+                    <Text style={{ fontSize: 30, marginRight: 5 }}>{cartQuantity ? cartQuantity : 0}</Text>
                 </View>
             </TouchableOpacity>
 
