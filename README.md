@@ -1,5 +1,5 @@
 # Pizzaria
-Atividade N2 do 1º bimestre - Mobile
+Atividade N2 do 1º bimestre - Mobile | React Native
 
 # Comandos de Inicialização
 npm install -d <br/>
