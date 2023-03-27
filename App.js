@@ -11,9 +11,9 @@ import category from './views/category';
 import categoryEdit from './views/categoryEdit';
 
 export default function App() {
-  return ( 
+  return (
     <Routes></Routes>
-   );
+  );
 }
 
 const Routes = createAppContainer(

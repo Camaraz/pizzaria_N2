@@ -68,7 +68,9 @@ export default function category({ navigation }) {
     return (
         <View style={styles.container}>
             
-            <Text style={styles.titulo}>Categorias</Text>
+            <View style={styles.titulo}>
+                <Text style={styles.titulo}>Categorias</Text>
+            </View>
 
             <ScrollView style={styles.containerSV}> 
                 {

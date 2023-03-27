@@ -1,4 +1,5 @@
 import { Alert, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import styles from '../content/style';
 import aboutStyles from '../content/about';
 import { deleteTableProduct } from '../services/dbService';
@@ -22,8 +23,10 @@ export default function about({ navigation }) {
     return (
         <View style={styles.container}>
 
-            <Text></Text>
-            <Text style={aboutStyles.texto}>Aplicatio desenvolvido por:</Text>
+            <View style={styles.titulo}>
+                <Text style={styles.titulo}>Informações</Text>
+            </View>
+            <Text style={aboutStyles.texto}>Aplicativo desenvolvido por:</Text>
 
             <FlatList data={[
                 { key: 'Heitor Teruo Shimamura Simizu' },
@@ -33,14 +36,9 @@ export default function about({ navigation }) {
 
             </FlatList>
 
-            <View style={styles.row}>
-                <TouchableOpacity style={styles.twoButtonRow} onPress={() => navigation.navigate('home')}>
-                    <Text style={styles.textoBotaoMenu}>Voltar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.twoButtonRow} onPress={() => deleteTable()}>
-                    <Text style={styles.textoBotaoMenu}>Delete</Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('home')} style={styles.bottomButtonLeft} >
+                <Ionicons name="chevron-back-circle" size={50} />
+            </TouchableOpacity>
         </View>
     );
 }

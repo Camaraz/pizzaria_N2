@@ -1,12 +1,16 @@
-import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 import styles from '../content/style';
 import Cart from '../components/cart';
+import { createTableOrder, createTableProductOrder, newOrder, newProductOrder } from '../services/dbService';
+import { Alert } from 'react-native';
+
 export default function cart({ navigation }) {
 
     let props = navigation.state.params;
 
+    const [customer, setCustomer] = useState();
     const [productList, setProductList] = useState([]);
     const [total, setTotal] = useState();
 
@@ -41,15 +45,76 @@ export default function cart({ navigation }) {
         setTotal(totalInCart.toFixed(2).toString());
     };
 
-    function finalizeOrder() {
-        console.log('Finalizando pedido');
+    async function finalizeOrder() {
+        //createTableOrder();
+        //createTableProductOrder();
+
+        if (productList.length > 0){
+
+            if (customer) {
+                let order = {
+                    id: null,
+                    user: customer,
+                    itemList: null
+                }
+
+                let result = await newOrder(order);
+                
+                if (result > 0) {
+                    order.itemList = setItemList(result);
+
+                    for(i in order.itemList){
+                        result = await newProductOrder(order.itemList[i]);
+                    }
+
+                    if (result) {
+                        navigation.navigate('home');
+                    }
+                } else {
+                    Alert.alert('Não foi possível concluir o pedido :(');
+                }
+            } else {
+                Alert.alert('Digite o nome do cliete');
+            }
+            
+        } else {
+            Alert.alert('O carrinho está vazio');
+        }
     };
 
+    function setItemList (orderId){
+        let list = [];
+        
+        for (i in productList){
+            
+            let index = list.findIndex(e => e.productId == productList[i].id);
+
+            if (index > -1) {
+                list[index].productQty++;
+            } else {
+                let item = {
+                    id: null,
+                    orderId: orderId,
+                    productId: productList[i].id,
+                    productQty: 1
+                };
+    
+                list.push(item);
+            }            
+        }
+
+        return list;
+    };
 
     return (
         <View style={styles.container}>
 
-            <Text>CARRINHO</Text>
+            <Text style={styles.titulo}>CARRINHO</Text>
+
+            <View style={styles.containerSV}>
+                <Text style={styles.labelInput}>Nome do cliente</Text>
+                <TextInput onChangeText={(text) => setCustomer(text)} value={customer} style={styles.inputText2}></TextInput>
+            </View>
 
             <ScrollView style={styles.containerSV}>
                 {

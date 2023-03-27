@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
         width: '90%'
     },
     titulo: {
+        position: 'relative',
+        top: 0,
         fontSize: 40,
         marginTop: 20,
         marginBottom: 20

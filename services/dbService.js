@@ -250,7 +250,6 @@ export function getAllCategory() {
                         }
                         retorno.push(obj);
                     }
-                    console.log(retorno);
                     resolve(retorno);
                 })
         },
@@ -282,7 +281,6 @@ export function getAllCategoryForDropDown() {
                         }
                         retorno.push(obj);
                     }
-                    console.log(retorno);
                     resolve(retorno);
                 })
         },
@@ -363,18 +361,13 @@ export function deleteCategory(id) {
 export async function createTableOrder() {
     return new Promise((resolve, reject) => {
         const query = `
-        CREATE TABLE IF NOT EXISTS tbOrderProduct (
-            Id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
-            FOREING KEY (OrderId) REFERENCES tbOrder (Id)
-            FOREING KEY (ProductId) REFERENCES tbProduct (Id)
-        )
-
-        CREATE TABLE IF NOT EXISTS tbOrder
+        CREATE TABLE IF NOT EXISTS tbOrder 
         (
-            Id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
-            [Date] DATE NOT NULL,
-            FOREING KEY(OrderProductId) REEFERENCES (tbOrderProduct)
-        )`;
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Username text not null,
+            [Date] DATE NOT NULL
+        )    
+        `;
 
         let dbCx = getDbConnection();        
         
@@ -392,8 +385,52 @@ export async function createTableOrder() {
 
 export async function deleteTableOrder() {
     return new Promise((resolve, reject) => {
+        const query = `DROP TABLE IF EXISTS tbOrder`;
+
+        let dbCx = getDbConnection();        
+        
+        dbCx.transaction(tx => {
+            tx.executeSql(query);
+            resolve(true); 
+        },
+            error => {
+                console.log(error);
+                resolve(false);
+            }
+        );
+    });
+};
+
+export async function createTableProductOrder() {
+    return new Promise((resolve, reject) => {
+        const query = `
+        CREATE TABLE IF NOT EXISTS tbOrderProduct (
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            OrderId INTEGER NOT NULL,
+            ProductId INTEGER NOT NULL,
+            ProductQuantity INTEGER NOT NULL,
+            FOREIGN KEY (OrderId) REFERENCES tbOrder(Id),
+            FOREIGN KEY (ProductId) REFERENCES tbProduct(Id)
+        )        
+        `;
+
+        let dbCx = getDbConnection();        
+        
+        dbCx.transaction(tx => {
+            tx.executeSql(query);
+            resolve(true); 
+        },
+            error => {
+                console.log(error);
+                resolve(false);
+            }
+        );
+    });
+};
+
+export async function deleteTableProductOrder() {
+    return new Promise((resolve, reject) => {
         const query = `DROP TABLE IF EXISTS tbOrderProduct 
-        DROP TABLE IF EXISTS tbOrder
         `;
 
         let dbCx = getDbConnection();        
@@ -416,9 +453,9 @@ export function getAllOrders() {
 
         let dbCx = getDbConnection();
         dbCx.transaction(tx => {
-            let query = `SELECT * FROM tbOrder o
+            let query = `SELECT o.*, p.Description, op.ProductQuantity, p.UnitValue FROM tbOrder o
             INNER JOIN tbOrderProduct op ON op.OrderId = o.Id
-            INNER JOIN tProduct p ON p.Id = op.ProductId
+            INNER JOIN tbProduct p ON p.Id = op.ProductId
             `;
             
             tx.executeSql(query, [],
@@ -428,12 +465,16 @@ export function getAllOrders() {
 
                     for (let n = 0; n < registros.rows.length; n++) {
                         let obj = {
-                            id: registros.rows.item(n).id,
-                            description: registros.rows.item(n).description.toUpperCase()
+                            id: registros.rows.item(n).Id,
+                            user: registros.rows.item(n).Username.toUpperCase(),
+                            date: registros.rows.item(n).Date.toUpperCase(),
+                            product: registros.rows.item(n).Description.toUpperCase(),
+                            productQty: registros.rows.item(n).ProductQuantity,
+                            productUnitValue: registros.rows.item(n).UnitValue
                         }
                         retorno.push(obj);
                     }
-                    console.log(retorno);
+                    
                     resolve(retorno);
                 })
         },
@@ -449,11 +490,33 @@ export function getAllOrders() {
 export function newOrder(order) {
 
     return new Promise((resolve, reject) => {
-        let query = 'insert into tbCategory (id, description) values (?,?)';
+        let query = `insert into tbOrder (id, username, date) values (?,?, DATE('now')) 
+        `;
         let dbCx = getDbConnection();
 
         dbCx.transaction(tx => {
-            tx.executeSql(query, [category.id, category.description],
+            tx.executeSql(query, [order.id, order.user],
+                (tx, resultado) => {
+                    resolve(resultado.insertId);
+                })
+        },
+            error => {
+                console.log(error);
+                resolve(false);
+            }
+        )
+    }
+    );
+};
+
+export function newProductOrder(item) {
+
+    return new Promise((resolve, reject) => {
+        let query = `insert into tbOrderProduct (id, orderId, productId, productQuantity) values (?,?,?,?)`;
+        let dbCx = getDbConnection();
+
+        dbCx.transaction(tx => {
+            tx.executeSql(query, [item.id, item.orderId, item.productId, item.productQty],
                 (tx, resultado) => {
                     resolve(resultado.rowsAffected > 0);
                 })
@@ -468,4 +531,3 @@ export function newOrder(order) {
 };
 
 //#endregion
-
