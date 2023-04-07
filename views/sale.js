@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { getAllOrders } from '../services/dbService';
 import { useEffect, useState } from 'react';
 import Sale from '../components/sale';
- 
+
 export default function sale({ navigation }) {
 
     const [orderList, setOrderList] = useState([]);
@@ -40,7 +40,7 @@ export default function sale({ navigation }) {
             } else {
                 let order = {
                     id: list[i].id,
-                    date: list[i].date,
+                    date: formatDate(list[i].date),
                     customer: list[i].user,
                     productList: [productItem]
                 };
@@ -50,7 +50,15 @@ export default function sale({ navigation }) {
         }
 
         return orders;
-    }
+    };
+
+    function formatDate(date) {
+        var datePart = date.match(/\d+/g),
+            year = datePart[0].substring(2), // get only two digits
+            month = datePart[1], day = datePart[2];
+
+        return day + '/' + month + '/' + year;
+    };
 
     return (
         <View style={styles.container}>
@@ -62,7 +70,7 @@ export default function sale({ navigation }) {
             <ScrollView style={styles.containerSV}>
                 {
                     orderList.map((order, index) => (
-                        <Sale order={order} key={index.toString()}/>
+                        <Sale order={order} key={index.toString()} />
                     ))
                 }
             </ScrollView>

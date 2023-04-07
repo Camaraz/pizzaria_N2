@@ -15,11 +15,12 @@ export default function sale({ order }) {
             totalValue = totalValue + (order.productList[i].productQty * order.productList[i].productUnitValue);
         }
         setTotal(totalValue.toFixed(2).toString());
-    },[]);
+    }, []);
 
     return (
         <View style={orderStyles.listItem}>
 
+            <Text style={orderStyles.listItemText}>Código: {order.id}</Text>
             <Text style={orderStyles.listItemText}>Cliente: {order.customer}</Text>
             <Text style={orderStyles.listItemText}>Data: {order.date}</Text>
 
@@ -30,7 +31,7 @@ export default function sale({ order }) {
                         <Text style={[orderStyles.listItemText, styles.addMarginTop]}>Produto: {item.product}</Text>
                         <View style={styles.row}>
                             <Text style={orderStyles.listItemText}>Quantidade: {item.productQty}</Text>
-                            <Text style={orderStyles.listItemText}> - Valor Total: R${(item.productQty * item.productUnitValue).toFixed(2).toString()}</Text>
+                            <Text style={orderStyles.listItemText}> - Valor: R${(item.productQty * item.productUnitValue).toFixed(2).toString()}</Text>
                         </View>
                     </View>
                 ))

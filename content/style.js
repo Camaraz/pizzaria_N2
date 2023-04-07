@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     containerSV: {
-        width: '90%'
+        width: '85%'
     },
     titulo: {
         position: 'relative',
